@@ -592,9 +592,19 @@ public class SelectionCommands {
             Region region = clipboard.getRegion();
             Vector size = region.getMaximumPoint().subtract(region.getMinimumPoint());
             Vector origin = clipboard.getOrigin();
-
+            
+            Vector maxPoint = region.getMaximumPoint();
+            Vector minPoint = region.getMinimumPoint();
+        
+            int centerX = (maxPoint.getBlockX() + minPoint.getBlockX()) / 2;
+            int centerZ = (maxPoint.getBlockZ() + minPoint.getBlockZ()) / 2;
+            int centerY = (maxPoint.getBlockY() + minPoint.getBlockY()) / 2;
+        
+            Vector center = new Vector(centerX, centerY, centerZ);
+            
             player.print("Cuboid dimensions (max - min): " + size);
             player.print("Offset: " + origin);
+            player.print("Center: " + center);
             player.print("Cuboid distance: " + size.distance(Vector.ONE));
             player.print("# of blocks: " + (int) (size.getX() * size.getY() * size.getZ()));
             return;
@@ -604,7 +614,15 @@ public class SelectionCommands {
         Vector size = region.getMaximumPoint()
                 .subtract(region.getMinimumPoint())
                 .add(1, 1, 1);
+                
+        Vector maxPoint = region.getMaximumPoint();
+        Vector minPoint = region.getMinimumPoint();
         
+        int centerX = (maxPoint.getBlockX() + minPoint.getBlockX()) / 2;
+        int centerZ = (maxPoint.getBlockZ() + minPoint.getBlockZ()) / 2;
+        int centerY = (maxPoint.getBlockY() + minPoint.getBlockY()) / 2;
+        
+        Vector center = new Vector(centerX, centerY, centerZ);
         player.print("Type: " + session.getRegionSelector(player.getWorld())
                 .getTypeName());
         
@@ -614,6 +632,7 @@ public class SelectionCommands {
         }
         
         player.print("Size: " + size);
+        player.print("Center: " + center);
         player.print("Cuboid distance: " + region.getMaximumPoint().distance(region.getMinimumPoint()));
         player.print("# of blocks: " + region.getArea());
     }
